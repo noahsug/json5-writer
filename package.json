@@ -1,0 +1,34 @@
+{
+  "name": "json5-writer",
+  "version": "0.1.0",
+  "description": "Comment-preserving JSON5 parser",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:noahsug/json5-writer.git"
+  },
+  "keywords": [
+    "json5",
+    "preserve",
+    "comments",
+    "parse",
+    "parser",
+    "config",
+    "update",
+    "ast"
+  ],
+  "author": "Noah Sugarman <noahsug@gmail.com.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/noahsug/json5-writer/issues"
+  },
+  "homepage": "https://github.com/noahsug/json5-writer#readme",
+  "dependencies": {
+    "jest": "^22.4.3",
+    "jscodeshift": "^0.5.0"
+  },
+  "devDependencies": {}
+}
