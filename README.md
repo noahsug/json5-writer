@@ -1,10 +1,10 @@
 # json5-writer
 > Comment-preserving JSON5 parser
 
-json5-writer provides an API for parsing JSON5 without losing comments or formatting. It does this by transforming JSON5 into a JavaScript AST and using [jscodeshift](https://github.com/facebook/jscodeshift) to update values.
+json5-writer provides an API for parsing JSON5 without losing comments or formatting. It does so by transforming JSON5 into a JavaScript AST and using [jscodeshift](https://github.com/facebook/jscodeshift) to update values.
 
 ## Example
-`config.json5`:
+`config.json5`
 ```json5
 {
   // actions
@@ -22,7 +22,7 @@ json5-writer provides an API for parsing JSON5 without losing comments or format
 }
 ```
 
-`updateConfig.js`:
+`updateConfig.js`
 ```js
 const json5Writer = require('json5-writer')
 const config = fs.readFileSync('config.json5', 'utf-8')
@@ -35,7 +35,7 @@ writer.write({
 fs.writeFileSync('config.json5', writer.toSource(), 'utf-8')
 ```
 
-`config.json5` diff:
+`config.json5` diff
 ```diff
  {
    // actions
@@ -66,14 +66,14 @@ npm install --save json5-writer
 
 ## Usage
 ```js
-const writerInstance = json5Writer.load(json)
+const writerInstance = json5Writer.load(json) // get a writer instance for the given JSON5 string
 writerInstance.write(value) // write an object or array to JSON5
-const ast = writerInstance.ast // provides direct access to AST with jscodeshift API.
-const newJson = writerInstance.toSource(options)
+const ast = writerInstance.ast // directly access the AST with jscodeshift API
+const newJson = writerInstance.toSource(options) // get the modified JSON5 string
 ```
 
 #### `.write(value)`
-Writes an object or array to JSON5. Any field or property that doesn't exist in `value` is removed from the JSON5.
+Writes an object or array to JSON5. Any field or property that doesn't exist in `value` is removed.
 
 To keep an existing value, use `undefined`:
 ```js
@@ -83,10 +83,11 @@ write.toSource() // [{ name: 'Noah', age: 28 }, { name: 'Nancy' }]
 ```
 
 #### `.ast`
-Directly access the JSON5 turned JavaScript AST, wrapped in the [jscodeshift API](https://github.com/facebook/jscodeshift#the-jscodeshift-api).
+Directly access the JSON5-turned-JavaScript AST, wrapped in the [jscodeshift API](https://github.com/facebook/jscodeshift#the-jscodeshift-api).
 
-```
-const writer = json5Writer.load([1, 2, 3, 4])
+```js
+const j = require('jscodeshift')
+const writer = json5Writer.load('[1, 2, 3, 4]')
 writer.ast.find(j.Literal).forEach(path => {
   if (path.value.value % 2 === 0) path.value.value = 0
 })
@@ -98,6 +99,10 @@ Write loaded JSON5 to a string.
 
 `options` control what is output. By default, single quotes and trailing commas are enabled.
 
-`.toSource({quote: 'double'}) // sets strings to use double quotes in transformed code`
+`.toSource({quote: 'double'}) // sets modified strings to use double quotes`
 
 See the list of options [here](https://github.com/benjamn/recast/blob/52a7ec3eaaa37e78436841ed8afc948033a86252/lib/options.js#L61).
+
+## Limitations
+* Doesn't support writing a single primitive value: `write('some value')`
+* Doesn't support characters or syntax that are valid in JSON5 but not valid in JavaScript
