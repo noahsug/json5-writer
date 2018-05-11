@@ -137,6 +137,12 @@ it('preserves comments and formatting', () => {
 // trailing comment`)
 })
 
+it('removes leading whitespace', () => {
+  const writer = json5Writer.load(` [5]`)
+  writer.write([6])
+  expect(writer.toSource()).toBe(`[6]`)
+})
+
 it('outputs to source with options', () => {
   const writer = json5Writer.load('')
   writer.write({ 'car-type': 'honda' })
