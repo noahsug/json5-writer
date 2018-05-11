@@ -4,25 +4,6 @@
 json5-writer provides an API for parsing JSON5 without losing comments or formatting. It does so by transforming JSON5 into a JavaScript AST and using [jscodeshift](https://github.com/facebook/jscodeshift) to update values.
 
 ## Example
-`config.json5`
-```json5
-{
-  // actions
-  'eat honey': {
-    cooldown: 4,
-  },
-
-  // Note: A day without a friend is like a pot without a single drop of honey left inside.
-
-  // entities
-  'bear':  {
-    actions: [ 'eat honey' ],
-    canSpeak: true,
-  },
-}
-```
-
-`updateConfig.js`
 ```js
 const json5Writer = require('json5-writer')
 const config = fs.readFileSync('config.json5', 'utf-8')
@@ -95,14 +76,16 @@ write.toSource() // [1, 0, 3, 0]
 ```
 
 #### `.toSource(options)`
-Write loaded JSON5 to a string.
+Get the modified JSON5 string.
 
 `options` control what is output. By default, single quotes and trailing commas are enabled.
 
-`.toSource({quote: 'double'}) // sets modified strings to use double quotes`
+```js
+.toSource({quote: 'double'}) // sets modified strings to use double quotes
+```
 
 See the list of options [here](https://github.com/benjamn/recast/blob/52a7ec3eaaa37e78436841ed8afc948033a86252/lib/options.js#L61).
 
 ## Limitations
-* Doesn't support writing a single primitive value: `write('some value')`
+* Doesn't support writing a single primitive value: `.write('primitive')`
 * Doesn't support characters or syntax that are valid in JSON5 but not valid in JavaScript
