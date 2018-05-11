@@ -46,13 +46,13 @@ it(`writes a nested array`, () => {
   expect(writer.toSource()).toBe(`[[[[[5]]]]]`)
 })
 
-it('uses written object key order', () => {
+it(`overrides key order with what's in the written object`, () => {
   const writer = json5Writer.load('{ a: 1, c: 3 }')
-  writer.write({ a: 1, b: 2, c: 3 })
+  writer.write({ c: 3, b: 2, a: 1 })
   expect(writer.toSource()).toBe(`{
-  a: 1,
-  b: 2,
   c: 3,
+  b: 2,
+  a: 1,
 }`)
 })
 
@@ -90,7 +90,7 @@ it(`skips over undefined object values`, () => {
   expect(writer.toSource()).toBe(`{ a: 1, b: 2, c: 3 }`)
 })
 
-it('infers object key quote preference', () => {
+it('infers object key quote usage', () => {
   const writer = json5Writer.load(`[{ a: 1 }, { 'a': 1 }]`)
   writer.write([{ a: 1, b: 2 }, { a: 1, b: 2 }])
   expect(writer.toSource()).toBe(`[{
