@@ -27,8 +27,9 @@
   },
   "homepage": "https://github.com/noahsug/json5-writer#readme",
   "dependencies": {
-    "jest": "^22.4.3",
     "jscodeshift": "^0.5.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "jest": "^23.5.0"
+  }
 }
