@@ -86,8 +86,13 @@ it(`skips over undefined array values`, () => {
 
 it(`skips over undefined object values`, () => {
   const writer = json5Writer.load('{ a: 1, b: 2, c: 3 }')
-  writer.write({ a: 1, b: undefined, c: 3 })
-  expect(writer.toSource()).toBe(`{ a: 1, b: 2, c: 3 }`)
+  writer.write({ a: 1, b: undefined, c: 3, d: undefined, e: 2 })
+  expect(writer.toSource()).toBe(`{
+  a: 1,
+  b: 2,
+  c: 3,
+  e: 2,
+}`)
 })
 
 it('infers object key quote usage', () => {

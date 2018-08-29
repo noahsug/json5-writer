@@ -52,6 +52,7 @@ function writeObj(node, obj) {
       existingProperty.value = writeValue(existingProperty.value, obj[key])
       newProperties.push(existingProperty)
     } else {
+      if (obj[key] === undefined) return
       const newKey = getNewPropertyKey(node.properties, key)
       const newValue = writeValue(undefined, obj[key])
       const newProperty = j.property('init', newKey, newValue)

@@ -21,7 +21,7 @@
     "ast"
   ],
   "author": "Noah Sugarman <noahsug@gmail.com.com>",
-  "license": "MIT",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/noahsug/json5-writer/issues"
   },
