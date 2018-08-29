@@ -1,6 +1,6 @@
 {
   "name": "json5-writer",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "description": "Comment-preserving JSON5 parser",
   "main": "src/index.js",
   "scripts": {
