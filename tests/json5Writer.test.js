@@ -116,6 +116,21 @@ it('uses quotes when object key has invalid characters', () => {
 }`)
 })
 
+it('quotes object keys when quoteKeys is true', () => {
+  const writer = json5Writer.load(`{ a: 1 }`)
+  expect(writer.toSource({ quoteKeys: true })).toBe(`{ 'a': 1 }`)
+})
+
+it('unquotes object key when quoteKeys is false', () => {
+  const writer = json5Writer.load(`{ 'a': 1 }`)
+  expect(writer.toSource({ quoteKeys: false })).toBe(`{ a: 1 }`)
+})
+
+it('infers object key quote usage when quoteKeys is undefined', () => {
+  const writer = json5Writer.load(`{ 'a': 1 }`)
+  expect(writer.toSource({ quoteKeys: undefined })).toBe(`{ 'a': 1 }`)
+})
+
 it('preserves comments and formatting', () => {
   const writer = json5Writer.load(`// don't remove me
 {

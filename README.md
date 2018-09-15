@@ -1,7 +1,7 @@
 # json5-writer
-> Comment-preserving JSON5 parser
+> Comment-preserving JSON / JSON5 parser
 
-json5-writer provides an API for parsing JSON5 without losing comments or formatting. It does so by transforming JSON5 into a JavaScript AST and using [jscodeshift](https://github.com/facebook/jscodeshift) to update values.
+json5-writer provides an API for parsing JSON and JSON5 without losing comments or formatting. It does so by transforming JSON5 into a JavaScript AST and using [jscodeshift](https://github.com/facebook/jscodeshift) to update values.
 
 ## Example
 ```js
@@ -47,14 +47,15 @@ npm install --save json5-writer
 
 ## Usage
 ```js
-const writerInstance = json5Writer.load(json) // get a writer instance for the given JSON5 string
-writerInstance.write(value) // write an object or array to JSON5
+const writerInstance = json5Writer.load(jsonStr) // get a writer instance for the given JSON / JSON5 string
+writerInstance.write(objectOrArray) // update jsonStr, preserving comments
 const ast = writerInstance.ast // directly access the AST with jscodeshift API
-const newJson = writerInstance.toSource(options) // get the modified JSON5 string
+const newJson5 = writerInstance.toSource(options) // get the modified JSON5 string
+const newJson = writerInstance.toJSON(options) // get the modified JSON string
 ```
 
 #### `.write(value)`
-Writes an object or array to JSON5. Any field or property that doesn't exist in `value` is removed.
+Updates the JSON / JSON5 string with the new value. Any field or property that doesn't exist in `value` is removed.
 
 To keep an existing value, use `undefined`:
 ```js
@@ -78,14 +79,18 @@ write.toSource() // [1, 0, 3, 0]
 #### `.toSource(options)`
 Get the modified JSON5 string.
 
-`options` control what is output. By default, single quotes and trailing commas are enabled.
+`options` control what is output. By default, single quotes and trailing commas are enabled and key quote usage is inferred.
 
 ```js
-.toSource({quote: 'double'}) // sets modified strings to use double quotes
+.toSource({ quote: 'single', trailingComma: true, quoteKeys: undefined })
 ```
 
-See the list of options [here](https://github.com/benjamn/recast/blob/52a7ec3eaaa37e78436841ed8afc948033a86252/lib/options.js#L61).
+`quoteKeys` controls whether object keys are quoted. It can have three different values:
+ - `false` - no object keys will have quotes
+ - `true` - all object keys will have quotes
+ - `undefined` - object key quote usage is inferred [default]
 
-## Limitations
-* Doesn't support writing a single primitive value: `.write('primitive')`
-* Doesn't support characters or syntax that are valid in JSON5 but not valid in JavaScript
+See the remaining options [here](https://github.com/benjamn/recast/blob/52a7ec3eaaa37e78436841ed8afc948033a86252/lib/options.js#L61).
+
+#### `.toJSON(options)`
+Same as `.toSource(options)` but with `quote: 'double'`, `trailingComma: false`, `quoteKeys: true` by default.
