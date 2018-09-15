@@ -171,6 +171,25 @@ it('outputs to source with options', () => {
 }`)
 })
 
+// TODO: Why is a random newline inserted after "effects"?
+it('writes to JSON format', () => {
+  const writer = json5Writer.load('')
+  writer.write({
+    dmg: 8,
+    effects: ['bleed'],
+    area: [{ x: 1, y: 0 }],
+  })
+  expect(writer.toJSON()).toBe(`{
+  "dmg": 8,
+  "effects": ["bleed"],
+
+  "area": [{
+    "x": 1,
+    "y": 0
+  }]
+}`)
+})
+
 it('writes a complicated object', () => {
   const writer = json5Writer.load(`{
   // Game Data

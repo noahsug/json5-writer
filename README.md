@@ -85,12 +85,13 @@ Get the modified JSON5 string.
 .toSource({ quote: 'single', trailingComma: true, quoteKeys: undefined })
 ```
 
-`quoteKeys` controls whether object keys are quoted. It can have three different values:
- - `false` - no object keys will have quotes
- - `true` - all object keys will have quotes
- - `undefined` - object key quote usage is inferred [default]
+- `quoteKeys` controls whether object keys are quoted. It can have three different values:
+  - `false` - no object keys will have quotes
+  - `true` - all object keys will have quotes
+  - `undefined` - object key quote usage is inferred [default]
+- `quote` can be either `single` or `double`
 
-See the remaining options [here](https://github.com/benjamn/recast/blob/52a7ec3eaaa37e78436841ed8afc948033a86252/lib/options.js#L61).
+View the remaining options [here](https://github.com/benjamn/recast/blob/52a7ec3eaaa37e78436841ed8afc948033a86252/lib/options.js#L61).
 
 #### `.toJSON(options)`
 Same as `.toSource(options)` but with `quote: 'double'`, `trailingComma: false`, `quoteKeys: true` by default.

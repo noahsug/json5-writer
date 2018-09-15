@@ -37,7 +37,7 @@ function load(src) {
     })
   }
 
-  return { write, toSource, ast: j(root.right) }
+  return { write, toSource, toJSON, ast: j(root.right) }
 }
 
 function toAst(src) {
