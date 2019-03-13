@@ -266,7 +266,7 @@ it('writes arrays that contain both strings and objects', () => {
   ]
 }`)
 
-  writer.write({ array: [{ object: '' } ]});
+  writer.write({ array: [{ object: '' } ]})
 
   expect(writer.toJSON()).toBe(`{
   "array": [{

@@ -18,8 +18,8 @@ function writeValue(node, value) {
 
 function nodeTypeMatchesValue(node, value) {
   if (value === undefined || node === undefined) return false
-  if (isArray(value)) return node.type === 'ArrayExpression';
-  if (isObject(value)) return node.type === 'ObjectExpression';
+  if (isArray(value)) return node.type === 'ArrayExpression'
+  if (isObject(value)) return node.type === 'ObjectExpression'
   return node.type === 'Literal'
 }
 
