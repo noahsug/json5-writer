@@ -171,7 +171,7 @@ it('outputs to source with options', () => {
 }`)
 })
 
-// TODO: Why is a random newline inserted after "effects"?
+// TODO: Why is a newline inserted after "effects"?
 it('writes to JSON format', () => {
   const writer = json5Writer.load('')
   writer.write({
@@ -253,6 +253,25 @@ it('writes a complicated object', () => {
     health: 30,
     skills: [],
   },
+}`)
+})
+
+it('writes arrays that contain both strings and objects', () => {
+  const writer = json5Writer.load(`{
+  "array": [
+    "string",
+    {
+      "object": ""
+    }
+  ]
+}`)
+
+  writer.write({ array: [{ object: '' } ]});
+
+  expect(writer.toJSON()).toBe(`{
+  "array": [{
+    "object": ""
+  }]
 }`)
 })
 

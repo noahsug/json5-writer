@@ -17,31 +17,28 @@ function writeValue(node, value) {
 }
 
 function nodeTypeMatchesValue(node, value) {
-  if (node === undefined) return false
-
-  return (
-    (node.type === 'ArrayExpression' && isArray(value)) ||
-    (node.type === 'ObjectExpression' && isObj(value)) ||
-    node.type === 'Literal'
-  )
+  if (value === undefined || node === undefined) return false
+  if (isArray(value)) return node.type === 'ArrayExpression';
+  if (isObject(value)) return node.type === 'ObjectExpression';
+  return node.type === 'Literal'
 }
 
 function createEmptyNode(value) {
   if (isArray(value)) {
     return j.arrayExpression([])
   }
-  if (isObj(value)) {
+  if (isObject(value)) {
     return j.objectExpression([])
   }
   return j.literal('')
 }
 
-function writeArray(node, value) {
-  value.forEach((value, index) => {
+function writeArray(node, array) {
+  array.forEach((value, index) => {
     const existingElement = node.elements[index]
     node.elements[index] = writeValue(existingElement, value)
   })
-  node.elements.length = value.length
+  node.elements.length = array.length
 }
 
 function writeObj(node, obj) {
@@ -78,7 +75,7 @@ function getNewPropertyKey(properties, key) {
   return useIdentifier ? j.identifier(key) : j.literal(key)
 }
 
-function isObj(value) {
+function isObject(value) {
   return typeof value === 'object' && !isArray(value)
 }
 
