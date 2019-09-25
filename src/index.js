@@ -13,11 +13,13 @@ function load(src) {
 
   function toSource(options = {}) {
     // set default options
-    options = {
-      quote: 'single',
-      trailingComma: true,
-      ...options,
-    }
+    options = Object.assign(
+      {
+        quote: 'single',
+        trailingComma: true,
+      },
+      options
+    )
 
     const sourceAst =
       options.quoteKeys === undefined
@@ -29,12 +31,16 @@ function load(src) {
   }
 
   function toJSON(options = {}) {
-    return toSource({
-      quote: 'double',
-      trailingComma: false,
-      quoteKeys: true,
-      ...options,
-    })
+    return toSource(
+      Object.assign(
+        {
+          quote: 'double',
+          trailingComma: false,
+          quoteKeys: true
+        },
+        options
+      )
+    )
   }
 
   return { write, toSource, toJSON, ast: j(root.right) }
